@@ -5,6 +5,20 @@
     <title>Словоборг</title>
 </head>
 <body>
-    тест
+    <form method="post" action="/definition">
+        <label for="word">Word:</label><br>
+        <input id="word" type="text" name="word"><br>
+
+        <label for="definition">Definition:</label><br>
+        <input id="definition" type="text" name="definition"><br>
+
+        <label for="example">Example:</label><br>
+        <input id="example" type="text" name="example"><br>
+
+        <label for="submittedBy">Submitted by:</label><br>
+        <input id="submittedBy" type="text" name="submittedBy"><br>
+
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>
