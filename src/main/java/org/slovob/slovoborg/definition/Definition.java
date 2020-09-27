@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import java.time.LocalDate;
 
 @Entity
@@ -20,4 +21,9 @@ public class Definition {
     private LocalDate submittedOn;
     private int likes;
     private int dislikes;
+
+    @PrePersist
+    void submittedOn() {
+        submittedOn = LocalDate.now();
+    }
 }

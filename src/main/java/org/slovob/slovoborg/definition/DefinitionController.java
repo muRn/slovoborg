@@ -19,7 +19,6 @@ public class DefinitionController {
 
     @PostMapping
     public String saveDefinition(Definition definition) {
-        definition.setSubmittedOn(LocalDate.now());
         repo.save(definition);
         return "redirect:/";
     }
