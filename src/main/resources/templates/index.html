@@ -10,9 +10,8 @@
         <div th:text="${def.definition}"></div>
         <div th:text="${def.example}"></div>
         <div th:text="'Submitted by '+${def.submittedBy}+' on '+${def.submittedOn}"></div>
+        <hr>
     </div>
-
-    <hr th:if="${definitionList != null}">
 
     <form method="post" action="/definition">
         <label for="word">Word:</label><br>
