@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Словоборг</title>
 </head>
 <body>
+    <div th:each="def : ${definitionList}">
+        <h1 th:text="${def.word}"></h1>
+        <div th:text="${def.definition}"></div>
+        <div th:text="${def.example}"></div>
+        <div th:text="'Submitted by '+${def.submittedBy}+' on '+${def.submittedOn}"></div>
+    </div>
+
     <form method="post" action="/definition">
         <label for="word">Word:</label><br>
         <input id="word" type="text" name="word"><br>

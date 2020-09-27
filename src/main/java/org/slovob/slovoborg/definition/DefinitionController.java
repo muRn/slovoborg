@@ -21,6 +21,6 @@ public class DefinitionController {
     public String saveDefinition(Definition definition) {
         definition.setSubmittedOn(LocalDate.now());
         repo.save(definition);
-        return "index";
+        return "redirect:/";
     }
 }
