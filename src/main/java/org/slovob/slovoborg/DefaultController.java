@@ -22,7 +22,7 @@ public class DefaultController {
 
     @GetMapping
     public String showMainPage(Model model) {
-        List<Definition> definitions = defRepo.findAll();
+        List<Definition> definitions = defRepo.findByApproved(true);
         model.addAttribute(definitions);
         return "index";
     }

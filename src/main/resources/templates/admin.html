@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Словоборг</title>
+</head>
+<body>
+    <form method="post" action="/admin" th:each="def : ${definitionList}">
+        <h1 th:text="${def.word}"></h1>
+        <div th:text="${def.definition}"></div>
+        <div th:text="${def.example}"></div>
+        <div th:text="'Submitted by '+${def.submittedBy}+' on '+${def.submittedOn}"></div>
+        <input type="hidden" name="id" th:value="${def.id}">
+        <input type="submit" value="Approve">
+        <hr>
+    </form>
+</body>
+</html>

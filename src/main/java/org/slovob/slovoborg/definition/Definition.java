@@ -21,6 +21,7 @@ public class Definition {
     private LocalDate submittedOn;
     private int likes;
     private int dislikes;
+    private boolean approved;
 
     @PrePersist
     void submittedOn() {
