@@ -12,6 +12,8 @@
         <div th:text="'Submitted by '+${def.submittedBy}+' on '+${def.submittedOn}"></div>
     </div>
 
+    <hr th:if="${definitionList != null}">
+
     <form method="post" action="/definition">
         <label for="word">Word:</label><br>
         <input id="word" type="text" name="word"><br>
