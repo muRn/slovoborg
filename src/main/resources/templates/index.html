@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <script type="text/javascript" th:src="@{/js/opinion.js}"></script>
     <title>Словоборг</title>
 </head>
 <body>
@@ -10,6 +11,8 @@
         <div th:text="${def.definition}"></div>
         <div th:text="${def.example}"></div>
         <div th:text="'Submitted by '+${def.submittedBy}+' on '+${def.submittedOn}"></div>
+        <input type="button" th:value="'+ ('+${def.likes}+')'" th:onclick="'postOpinion({definitionId:'+${def.id}+',opinion:&quot;like&quot;})'">
+        <input type="button" th:value="'- ('+${def.dislikes}+')'" th:onclick="'postOpinion({definitionId:'+${def.id}+',opinion:&quot;dislike&quot;})'">
         <hr>
     </div>
 
