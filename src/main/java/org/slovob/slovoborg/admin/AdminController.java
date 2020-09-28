@@ -31,6 +31,6 @@ public class AdminController {
     @PostMapping
     public String approveDefinition(long id) {
         repo.approve(id);
-        return "/admin";
+        return "redirect:/admin";
     }
 }
