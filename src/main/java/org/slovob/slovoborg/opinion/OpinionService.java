@@ -2,6 +2,7 @@ package org.slovob.slovoborg.opinion;
 
 import org.slovob.slovoborg.definition.Definition;
 import org.slovob.slovoborg.definition.DefinitionRepository;
+import org.slovob.slovoborg.exception.FishyFrontendQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,13 +17,13 @@ public class OpinionService {
         this.definitionRepo = definitionRepo;
     }
 
-    public boolean processOpinion(Opinion opinion) {
-        Optional<Definition> definition = definitionRepo.findById(opinion.getDefinitionId());
+    public void processOpinion(Opinion opinion) {
+        long definitionId = opinion.getDefinitionId();
+        Optional<Definition> definition = definitionRepo.findById(definitionId);
         if (!definition.isPresent()) {
-            return false;
+            throw new FishyFrontendQuery("There is no definition with id " + definitionId);
         }
 
-        long definitionId = definition.get().getId();
         Optional<Opinion> existingOpinionOpt = opinionRepo.findByDefinitionIdAndIpAddress(opinion.getDefinitionId(), opinion.getIpAddress());
         if (!existingOpinionOpt.isPresent()) {
             opinionRepo.save(opinion);
@@ -31,7 +32,7 @@ public class OpinionService {
             } else if (opinion.getOpinion() == -1) {
                 definitionRepo.dislike(definitionId);
             }
-            return true;
+            return;
         }
 
         int existingOpinion = existingOpinionOpt.get().getOpinion();
@@ -63,9 +64,7 @@ public class OpinionService {
                 }
             }
         } else { // user knows something about browser console/postman
-            return false;
+            throw new FishyFrontendQuery("There is no button with opinion " + opinion.getOpinion());
         }
-
-        return true;
     }
 }
