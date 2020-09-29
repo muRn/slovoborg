@@ -34,37 +34,35 @@ public class OpinionService {
             return true;
         }
 
-        Opinion existingOpinion = existingOpinionOpt.get();
-        long existingOpinionId = existingOpinion.getId();
-        if (opinion.getOpinion() == 1) {
-            if (existingOpinion.getOpinion() == 1) {
+        int existingOpinion = existingOpinionOpt.get().getOpinion();
+        long existingOpinionId = existingOpinionOpt.get().getId();
+        if (existingOpinion < -1 || existingOpinion > 1) {
+            throw new RuntimeException("Opinion " + existingOpinionId + " somehow has opinion " + existingOpinion + " not in [-1..1]");
+        }
+
+        if (opinion.getOpinion() == 1) { // user pressed like
+            if (existingOpinion == 1) {
                 opinionRepo.updateOpinion(0, existingOpinionId);
                 definitionRepo.unlike(definitionId);
-            } else if (existingOpinion.getOpinion() == 0) {
-                opinionRepo.updateOpinion(1, existingOpinionId);
-                definitionRepo.like(definitionId);
-            } else if (existingOpinion.getOpinion() == -1) {
-                opinionRepo.updateOpinion(1, existingOpinionId);
-                definitionRepo.undislike(definitionId);
-                definitionRepo.like(definitionId);
             } else {
-                throw new RuntimeException("Opinion " + existingOpinionId + " somehow has opinion " + existingOpinion.getOpinion() + " not in [-1..1]");
+                opinionRepo.updateOpinion(1, existingOpinionId);
+                definitionRepo.like(definitionId);
+                if (existingOpinion == -1) {
+                    definitionRepo.undislike(definitionId);
+                }
             }
-        } else if (opinion.getOpinion() == -1) {
-            if (existingOpinion.getOpinion() == 1) {
-                opinionRepo.updateOpinion(-1, existingOpinionId);
-                definitionRepo.unlike(definitionId);
-                definitionRepo.dislike(definitionId);
-            } else if (existingOpinion.getOpinion() == 0) {
-                opinionRepo.updateOpinion(-1, existingOpinionId);
-                definitionRepo.dislike(definitionId);
-            } else if (existingOpinion.getOpinion() == -1) {
+        } else if (opinion.getOpinion() == -1) { // user pressed dislike
+            if (existingOpinion == -1) {
                 opinionRepo.updateOpinion(0, existingOpinionId);
                 definitionRepo.undislike(definitionId);
             } else {
-                throw new RuntimeException("Opinion " + existingOpinionId + " somehow has opinion " + existingOpinion.getOpinion() + " not in [-1..1]");
+                opinionRepo.updateOpinion(-1, existingOpinionId);
+                definitionRepo.dislike(definitionId);
+                if (existingOpinion == 1) {
+                    definitionRepo.unlike(definitionId);
+                }
             }
-        } else {
+        } else { // user knows something about browser console/postman
             return false;
         }
 
