@@ -11,8 +11,8 @@
         <div th:text="${def.definition}"></div>
         <div th:text="${def.example}"></div>
         <div th:text="'Submitted by '+${def.submittedBy}+' on '+${def.submittedOn}"></div>
-        <input type="button" th:value="'+ ('+${def.likes}+')'" th:onclick="'postOpinion({definitionId:'+${def.id}+',opinion:&quot;like&quot;})'">
-        <input type="button" th:value="'- ('+${def.dislikes}+')'" th:onclick="'postOpinion({definitionId:'+${def.id}+',opinion:&quot;dislike&quot;})'">
+        <input type="button" th:value="'+ ('+${def.likes}+')'" th:onclick="'postOpinion({definitionId:'+${def.id}+',opinion:1})'">
+        <input type="button" th:value="'- ('+${def.dislikes}+')'" th:onclick="'postOpinion({definitionId:'+${def.id}+',opinion:-1})'">
         <hr>
     </div>
 

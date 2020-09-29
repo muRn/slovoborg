@@ -24,6 +24,16 @@ public interface DefinitionRepository extends JpaRepository<Definition, Long> {
 
     @Modifying
     @Transactional
+    @Query("update Definition d set d.likes=d.likes-1 where d.id=?1")
+    public void unlike(long id);
+
+    @Modifying
+    @Transactional
     @Query("update Definition d set d.dislikes=d.dislikes+1 where d.id=?1")
     public void dislike(long id);
+
+    @Modifying
+    @Transactional
+    @Query("update Definition d set d.dislikes=d.dislikes-1 where d.id=?1")
+    public void undislike(long id);
 }

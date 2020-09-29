@@ -1,6 +1,5 @@
 package org.slovob.slovoborg.opinion;
 
-import org.slovob.slovoborg.definition.DefinitionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,22 +7,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/opinion")
 public class OpinionController {
-    private DefinitionRepository repo;
+    private OpinionService service;
 
     @Autowired
-    public OpinionController(DefinitionRepository repo) {
-        this.repo = repo;
+    public OpinionController(OpinionService service) {
+        this.service = service;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void processOpinion(@RequestBody Opinion o) {
-        if (o.getOpinion().equals("like")) {
-            repo.like(o.getDefinitionId());
-        } else {
-            repo.dislike(o.getDefinitionId());
-        }
+    public void processOpinion(@RequestBody Opinion opinion, HttpServletRequest request) {
+        opinion.setIpAddress(request.getRemoteAddr());
+        boolean result = service.processOpinion(opinion);
     }
 }
