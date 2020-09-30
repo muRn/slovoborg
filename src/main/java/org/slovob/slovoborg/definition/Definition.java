@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import java.time.LocalDate;
 
-@Entity
 @Data
+@Entity
 public class Definition {
     @Id
     @GeneratedValue

@@ -12,13 +12,13 @@ function postOpinion(opinion) {
 }
 
 function changeCount(opinion) {
-    let action = opinion.opinion === 1 ? 'like' : 'dislike';
+    const action = opinion.opinion === 1 ? 'like' : 'dislike';
 
-    let buttonId = action + '_btn_' + opinion.definitionId;
-    let countId = action + 's_cnt_' + opinion.definitionId;
+    const buttonId = action + '_btn_' + opinion.definitionId;
+    const countId = action + 's_cnt_' + opinion.definitionId;
 
-    let button = document.querySelector('#' + buttonId);
-    let count = document.querySelector('#' + countId);
+    const button = document.querySelector('#' + buttonId);
+    const count = document.querySelector('#' + countId);
 
     if (button.classList.contains('primary')) {
         button.classList.remove('primary');
@@ -26,5 +26,14 @@ function changeCount(opinion) {
     } else {
         button.classList.add('primary');
         count.textContent = count.textContent - -1;
+
+        // checking if opposite button should be released
+        const oppositeAction = opinion.opinion === 1 ? 'dislike' : 'like';
+        const otherButton = document.querySelector('#' + oppositeAction + '_btn_' + opinion.definitionId);
+        const otherCount = document.querySelector('#' + oppositeAction + 's_cnt_' + opinion.definitionId);
+        if (otherButton.classList.contains('primary')) {
+            otherButton.classList.remove('primary');
+            otherCount.textContent = otherCount.textContent - 1
+        }
     }
 }
