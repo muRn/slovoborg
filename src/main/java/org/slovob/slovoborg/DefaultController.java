@@ -1,5 +1,6 @@
 package org.slovob.slovoborg;
 
+import org.slovob.slovoborg.definition.Definition;
 import org.slovob.slovoborg.definition.DefinitionTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

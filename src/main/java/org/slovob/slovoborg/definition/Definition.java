@@ -1,15 +1,16 @@
 package org.slovob.slovoborg.definition;
 
 import lombok.Data;
+import lombok.ToString;
+import org.slovob.slovoborg.opinion.Opinion;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
+//@ToString
 public class Definition {
     @Id
     @GeneratedValue
@@ -22,6 +23,9 @@ public class Definition {
     private int likes;
     private int dislikes;
     private boolean approved;
+
+    @OneToMany(mappedBy = "definition")
+    private List<Opinion> opinions;
 
     @PrePersist
     void submittedOn() {

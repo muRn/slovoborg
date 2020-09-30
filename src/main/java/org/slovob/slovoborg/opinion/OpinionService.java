@@ -17,16 +17,16 @@ public class OpinionService {
         this.definitionRepo = definitionRepo;
     }
 
-    public void processOpinion(Opinion opinion) {
+    public void processOpinion(OpinionTransfer opinion, String ipAddress) {
         long definitionId = opinion.getDefinitionId();
         Optional<Definition> definition = definitionRepo.findById(definitionId);
         if (!definition.isPresent()) {
             throw new FishyFrontendQuery("There is no definition with id " + definitionId);
         }
 
-        Optional<Opinion> existingOpinionOpt = opinionRepo.findByDefinitionIdAndIpAddress(opinion.getDefinitionId(), opinion.getIpAddress());
+        Optional<Opinion> existingOpinionOpt = opinionRepo.findByDefinitionIdAndIpAddress(definitionId, ipAddress);
         if (!existingOpinionOpt.isPresent()) {
-            opinionRepo.save(opinion);
+            opinionRepo.save(new Opinion(opinion, ipAddress));
             if (opinion.getOpinion() == 1) {
                 definitionRepo.like(definitionId);
             } else if (opinion.getOpinion() == -1) {

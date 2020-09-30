@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface OpinionRepository extends JpaRepository<Opinion, Long> {
+    @Query("select o from Opinion o join o.definition d where d.id=?1 and o.ipAddress=?2")
     public Optional<Opinion> findByDefinitionIdAndIpAddress(long definitionId, String ipAddress);
 
     @Modifying
