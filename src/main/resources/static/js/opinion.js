@@ -4,3 +4,7 @@ function postOpinion(opinion) {
     request.setRequestHeader('Content-Type', 'application/json');
     request.send(JSON.stringify(opinion));
 }
+
+function changeCount(opinion) {
+
+}
