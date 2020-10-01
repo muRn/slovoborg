@@ -16,7 +16,9 @@ public class Definition {
     @GeneratedValue
     private long id;
     private String word;
+    @Column(length = 2048)
     private String definition;
+    @Column(length = 2048)
     private String example;
     private String submittedBy;
     private LocalDate submittedOn;
