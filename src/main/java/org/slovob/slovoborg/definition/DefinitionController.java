@@ -5,21 +5,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDate;
-
 @Controller
 @RequestMapping("/definition")
 public class DefinitionController {
-    private DefinitionRepository repo;
+    private DefinitionService service;
 
     @Autowired
-    public DefinitionController(DefinitionRepository repo) {
-        this.repo = repo;
+    public DefinitionController(DefinitionService service) {
+        this.service = service;
     }
 
     @PostMapping
     public String saveDefinition(Definition definition) {
-        repo.save(definition);
+        service.saveDefinition(definition);
         return "redirect:/";
     }
 }

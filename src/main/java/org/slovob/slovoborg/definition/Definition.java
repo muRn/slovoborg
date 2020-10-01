@@ -1,8 +1,8 @@
 package org.slovob.slovoborg.definition;
 
 import lombok.Data;
-import lombok.ToString;
 import org.slovob.slovoborg.opinion.Opinion;
+import org.slovob.slovoborg.word.Word;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,14 +10,17 @@ import java.util.List;
 
 @Data
 @Entity
-//@ToString
 public class Definition {
     @Id
     @GeneratedValue
     private long id;
-    private String word;
+
+    @ManyToOne
+    private Word word;
+
     @Column(length = 2048)
     private String definition;
+
     @Column(length = 2048)
     private String example;
     private String submittedBy;
@@ -32,5 +35,13 @@ public class Definition {
     @PrePersist
     void submittedOn() {
         submittedOn = LocalDate.now();
+    }
+
+    public boolean getLiked() {
+        return !opinions.isEmpty() && opinions.get(0).getOpinion() == 1;
+    }
+
+    public boolean getDisliked() {
+        return !opinions.isEmpty() && opinions.get(0).getOpinion() == -1;
     }
 }

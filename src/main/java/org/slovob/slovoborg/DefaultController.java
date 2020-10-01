@@ -1,7 +1,6 @@
 package org.slovob.slovoborg;
 
 import org.slovob.slovoborg.definition.Definition;
-import org.slovob.slovoborg.definition.DefinitionTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +22,7 @@ public class DefaultController {
 
     @GetMapping
     public String showMainPage(Model model, HttpServletRequest request) {
-        List<DefinitionTransfer> definitions = service.getDefinitions(request.getRemoteAddr());
+        List<Definition> definitions = service.getDefinitions(request.getRemoteAddr());
         model.addAttribute(definitions);
         return "index";
     }
