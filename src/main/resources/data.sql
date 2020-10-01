@@ -57,3 +57,9 @@ values(hibernate_sequence.nextval, 5, '127.0.0.1', 1, parsedatetime('30-09-2020 
 
 insert into Opinion(id, definition_id, ip_address, opinion, updated_at)
 values(hibernate_sequence.nextval, 6, '127.0.0.1', -1, parsedatetime('01-10-2020 12:34:56', 'dd-MM-yyyy HH:mm:ss'));
+
+insert into Opinion(id, definition_id, ip_address, opinion, updated_at)
+values(hibernate_sequence.nextval, 5, '0:0:0:0:0:0:0:1', -1, parsedatetime('30-09-2020 12:34:56', 'dd-MM-yyyy HH:mm:ss'));
+
+insert into Opinion(id, definition_id, ip_address, opinion, updated_at)
+values(hibernate_sequence.nextval, 6, '0:0:0:0:0:0:0:1', 1, parsedatetime('01-10-2020 12:34:56', 'dd-MM-yyyy HH:mm:ss'));
