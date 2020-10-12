@@ -52,6 +52,10 @@ jianbing.', 'Selvage fanny pack la croix thundercats listicle vegan everyday car
 shorts tofu pug. Poutine tattooed trust fund etsy sartorial.', 'jianbing', parsedatetime('01-10-2020', 'dd-MM-yyyy'), 0,
 0, 0);
 
+-- double quotes and upper case just to not get Intellij errors
+insert into "USER"(id, username, email, password, role)
+values (hibernate_sequence.nextval, 'admin', 'xmurnx@gmail.com', '$2a$10$7UtR5LgNK/IRqO4S4.c8ROxcc85MxjzcJa.PrWJd3lWGIvBZ11I3i', 'ADMIN');
+
 insert into Opinion(id, definition_id, ip_address, opinion, updated_at)
 values(hibernate_sequence.nextval, 5, '127.0.0.1', 1, parsedatetime('30-09-2020 12:34:56', 'dd-MM-yyyy HH:mm:ss'));
 
