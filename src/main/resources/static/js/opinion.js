@@ -4,6 +4,10 @@ function postOpinion(opinion) {
     request.setRequestHeader('Content-Type', 'application/json');
     request.onload = function() {
         changeCount(opinion);
+        if (this.status === 401) {
+            window.location.replace('/login');
+            return;
+        }
     };
     request.onerror = function() {
         console.log('something went wrong while POSTing opinion');
