@@ -5,7 +5,7 @@
     <title>Словоборг</title>
 </head>
 <body>
-    <form method="post" action="/admin" th:each="def : ${definitionList}">
+    <form method="post" th:action="@{/admin}" th:each="def : ${definitionList}">
         <h1 th:text="${def.word.word}"></h1>
         <div th:text="${def.definition}"></div>
         <div th:text="${def.example}"></div>
