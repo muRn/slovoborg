@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,7 +31,14 @@ public class AdminController {
 
     @PostMapping
     public String approveDefinition(long id) {
-        repo.approve(id);
+        Optional<Definition> definitionOpt = repo.findById(id);
+        if (!definitionOpt.isPresent()) {
+            throw new RuntimeException("Approved definition " + id + " does not exist");
+        }
+
+        Definition definition = definitionOpt.get();
+        definition.setApproved(true);
+        repo.save(definition);
         return "redirect:/admin";
     }
 }

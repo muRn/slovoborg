@@ -32,16 +32,27 @@ public class Definition {
     @OneToMany(mappedBy = "definition")
     private List<Opinion> opinions;
 
-    @PrePersist
-    void submittedOn() {
-        submittedOn = LocalDate.now();
-    }
-
     public boolean getLiked() {
         return !opinions.isEmpty() && opinions.get(0).getOpinion() == 1;
     }
 
     public boolean getDisliked() {
         return !opinions.isEmpty() && opinions.get(0).getOpinion() == -1;
+    }
+
+    public void like() {
+        likes += 1;
+    }
+
+    public void unlike() {
+        likes -= 1;
+    }
+
+    public void dislike() {
+        dislikes += 1;
+    }
+
+    public void undislike() {
+        dislikes -= 1;
     }
 }

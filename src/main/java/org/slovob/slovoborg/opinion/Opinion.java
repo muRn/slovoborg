@@ -26,11 +26,11 @@ public class Opinion {
         updatedAt = LocalDateTime.now();
     }
 
-    public Opinion(OpinionTransfer ot, String ipAddress) {
-        opinion = ot.getOpinion();
+    public Opinion(int opinion, long definitionId, String ipAddress) {
+        this.opinion = opinion;
         this.ipAddress = ipAddress;
         Definition d = new Definition();
-        d.setId(ot.getDefinitionId());
+        d.setId(definitionId);
         definition = d;
     }
 }

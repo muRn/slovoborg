@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping("/definition")
 public class DefinitionController {
@@ -17,6 +19,7 @@ public class DefinitionController {
 
     @PostMapping
     public String saveDefinition(Definition definition) {
+        definition.setSubmittedOn(LocalDate.now());
         service.saveDefinition(definition);
         return "redirect:/";
     }
