@@ -5,6 +5,8 @@
     <title>Словоборг</title>
 </head>
 <body>
+    <div th:replace="fragments/auth_header :: auth-header">Auth info should be here</div>
+
     <form method="post" th:action="@{/admin}" th:each="def : ${definitionList}">
         <h1 th:text="${def.word.word}"></h1>
         <div th:text="${def.definition}"></div>

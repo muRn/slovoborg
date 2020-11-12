@@ -49,6 +49,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     private String determineTargetUrl(HttpServletRequest request, HttpServletResponse response) {
         DefaultSavedRequest sr = (DefaultSavedRequest) new HttpSessionRequestCache().getRequest(request, response);
+        if (sr == null) { // user pressed log in explicitly without trying to access something forbidden first
+            return "/";
+        }
+
         String uri = sr.getRequestURI();
         if ("/opinion".equalsIgnoreCase(uri)) {
             return "/";

@@ -31,7 +31,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and()
                     .formLogin()
+                        .loginPage("/login")
                         .successHandler(getAuthenticationSuccessHandler())
+                .and()
+                    .logout()
+                        .logoutSuccessUrl("/")
                 .and()
                     .exceptionHandling()
                         .defaultAuthenticationEntryPointFor(getAjaxAuthenticationEntryPoint(), new AntPathRequestMatcher("/opinion"));
