@@ -37,7 +37,7 @@
 
     <form sec:authorize="isAuthenticated()" method="post" th:action="@{/definition}">
         <label for="word">Word:</label><br>
-        <input id="word" type="text" name="word.word"><br>
+        <input id="word" type="text" name="word.word" th:value="${wordValue}"><br>
 
         <label for="definition">Definition:</label><br>
         <input id="definition" type="text" name="definition"><br>

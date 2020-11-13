@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -26,6 +27,12 @@ public class WordController {
 
     @GetMapping
     public String showWordDefinitions(@RequestParam long id, Model model, @AuthenticationPrincipal User user) {
+        Optional<Word> wordOpt = repo.findById(id);
+        if (!wordOpt.isPresent()) {
+            throw new RuntimeException("Word " + id + " does not exist");
+        }
+
+        model.addAttribute("wordValue", wordOpt.get().getWord());
         List<Definition> definitions = repo.findApprovedDefinitionsByWordId(id);
         List<DefinitionDto> definitionDtoList = definitions.stream()
                 .map(x -> DefinitionDto.fromDefinition(x, user))
