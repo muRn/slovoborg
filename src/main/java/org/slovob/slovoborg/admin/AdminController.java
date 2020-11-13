@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +24,11 @@ public class AdminController {
     }
 
     @GetMapping
-    public String showDefinitionsToApprove(Model model) {
+    public String showDefinitionsToApprove(Model model, Principal principal) {
+        if (principal != null) {
+            model.addAttribute("user", principal.getName());
+        }
+
         List<Definition> definitionsToApprove = repo.findByApproved(false);
         model.addAttribute(definitionsToApprove);
         return "/admin";
