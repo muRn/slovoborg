@@ -17,7 +17,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     private long id;
-    private String username;
+    private String name;
     private String email;
     private String password;
     private String role;
@@ -25,6 +25,11 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
     }
 
     @Override

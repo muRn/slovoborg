@@ -11,7 +11,7 @@ public class RegistrationForm {
 
     public User toUser(PasswordEncoder passwordEncoder) {
         User user = new User();
-        user.setUsername(username);
+        user.setName(username);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setRole("USER");
