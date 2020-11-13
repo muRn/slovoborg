@@ -35,7 +35,7 @@
         <hr>
     </div>
 
-    <form method="post" th:action="@{/definition}">
+    <form th:if="${user!=null}" method="post" th:action="@{/definition}">
         <label for="word">Word:</label><br>
         <input id="word" type="text" name="word.word"><br>
 
@@ -44,9 +44,6 @@
 
         <label for="example">Example:</label><br>
         <input id="example" type="text" name="example"><br>
-
-        <label for="submittedBy">Submitted by:</label><br>
-        <input id="submittedBy" type="text" name="submittedBy"><br>
 
         <input type="submit" value="Submit">
     </form>
