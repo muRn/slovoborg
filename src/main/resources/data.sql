@@ -56,6 +56,21 @@ shorts tofu pug. Poutine tattooed trust fund etsy sartorial.', 'jianbing', parse
 insert into "USER"(id, username, email, password, role)
 values (hibernate_sequence.nextval, 'admin', 'xmurnx@gmail.com', '$2a$10$7UtR5LgNK/IRqO4S4.c8ROxcc85MxjzcJa.PrWJd3lWGIvBZ11I3i', 'ADMIN');
 
+insert into "USER"(id, username, email, password, role)
+values (hibernate_sequence.nextval, 'flexitarian', 'flexitarian@maildomain.com', '$2y$12$SIfCaagClsWhBUDXlygpkeBzWv/CnXveaKa.y57hqAtR.PQthSlt6', 'USER');
+
+insert into "USER"(id, username, email, password, role)
+values (hibernate_sequence.nextval, 'bushwick', 'bushwick@maildomain.com', '$2y$10$KzS2XhK4iKcnRXjbywKjY.LQE/jilQZScXRxWuRiHEq73lAjrA0Di', 'USER');
+
+insert into "USER"(id, username, email, password, role)
+values (hibernate_sequence.nextval, 'intelligentsia', 'intelligentsia@maildomain.com', '$2y$08$BUsCvG4IUoYm3ZJzqropWOsjLoh9wigbYsXNFE18EwE/EEz04jSh2', 'USER');
+
+insert into "USER"(id, username, email, password, role)
+values (hibernate_sequence.nextval, 'marfa', 'marfa@maildomain.com', '$2y$06$vI.8fNhPYAXuX44OPG.Eiec33qUooHKzMrHIe0D2TNb2dKwPxMw5C', 'USER');
+
+insert into "USER"(id, username, email, password, role)
+values (hibernate_sequence.nextval, 'jianbing', 'jianbing@maildomain.com', '$2y$04$FRwjn2YzCtL0lV/5Popjg.wrGzbTuiR3vKGLod7hiKKX9xgTz6M1W', 'USER');
+
 insert into Opinion(id, definition_id, ip_address, opinion, updated_at)
 values(hibernate_sequence.nextval, 5, '127.0.0.1', 1, parsedatetime('30-09-2020 12:34:56', 'dd-MM-yyyy HH:mm:ss'));
 

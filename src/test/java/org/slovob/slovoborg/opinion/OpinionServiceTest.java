@@ -47,7 +47,7 @@ public class OpinionServiceTest {
     public void shouldLike_ifNoOpinionYet() {
         given(definitionRepo.findById(DEFINITION_ID)).willReturn(Optional.of(new Definition()));
         Optional<Opinion> existingOpinion = Optional.empty();
-        given(opinionRepo.findByDefinitionIdAndIpAddress(DEFINITION_ID, CLIENT_IP)).willReturn(existingOpinion);
+        given(opinionRepo.findByDefinitionIdAndUserId(DEFINITION_ID, CLIENT_IP)).willReturn(existingOpinion);
 
         subject.processOpinion(opinionTransfer, CLIENT_IP);
 
@@ -61,7 +61,7 @@ public class OpinionServiceTest {
     public void shouldUnlike_ifAlreadyLiked() {
         given(definitionRepo.findById(DEFINITION_ID)).willReturn(Optional.of(new Definition()));
         Optional<Opinion> existingOpinion = Optional.of(new Opinion(1, DEFINITION_ID, CLIENT_IP));
-        given(opinionRepo.findByDefinitionIdAndIpAddress(DEFINITION_ID, CLIENT_IP)).willReturn(existingOpinion);
+        given(opinionRepo.findByDefinitionIdAndUserId(DEFINITION_ID, CLIENT_IP)).willReturn(existingOpinion);
 
         subject.processOpinion(opinionTransfer, CLIENT_IP);
 
@@ -74,7 +74,7 @@ public class OpinionServiceTest {
     @Test void shouldLikeAndUndislike_ifAlreadyDisliked() {
         given(definitionRepo.findById(DEFINITION_ID)).willReturn(Optional.of(new Definition()));
         Optional<Opinion> existingOpinion = Optional.of(new Opinion(-1, DEFINITION_ID, CLIENT_IP));
-        given(opinionRepo.findByDefinitionIdAndIpAddress(DEFINITION_ID, CLIENT_IP)).willReturn(existingOpinion);
+        given(opinionRepo.findByDefinitionIdAndUserId(DEFINITION_ID, CLIENT_IP)).willReturn(existingOpinion);
 
         subject.processOpinion(opinionTransfer, CLIENT_IP);
 

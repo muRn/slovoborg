@@ -6,7 +6,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,6 +27,6 @@ public class DefinitionRepositoryIntegrationTest {
 
         // then
         assertThat(found.size()).isEqualTo(3);
-        assertThat(found.get(0).getSubmittedBy()).isEqualTo("flexitarian");
+        assertThat(found.get(0).getAuthor()).isEqualTo("flexitarian");
     }
 }
