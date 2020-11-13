@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/index.css}">
@@ -35,7 +35,7 @@
         <hr>
     </div>
 
-    <form th:if="${user!=null}" method="post" th:action="@{/definition}">
+    <form sec:authorize="isAuthenticated()" method="post" th:action="@{/definition}">
         <label for="word">Word:</label><br>
         <input id="word" type="text" name="word.word"><br>
 

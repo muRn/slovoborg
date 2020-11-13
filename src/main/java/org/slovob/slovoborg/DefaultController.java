@@ -23,11 +23,6 @@ public class DefaultController {
 
     @GetMapping
     public String showMainPage(Model model, @AuthenticationPrincipal User user) {
-        if (user != null) {
-            model.addAttribute("user", user.getName());
-            model.addAttribute("role", user.getRole());
-        }
-
         List<DefinitionDto> definitions = service.getDefinitions(user);
         model.addAttribute(definitions);
         return "index";

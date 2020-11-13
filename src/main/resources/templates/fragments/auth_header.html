@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
     <div th:fragment="auth-header">
-        <div th:if="${user!=null}">
-            <p th:text="'Logged in as '+${user}"></p>
+        <div sec:authorize="isAuthenticated()">
+            <p th:text="'Logged in as '+${#authentication.name}"></p>
             <form method="POST" th:action="@{/logout}">
                 <input type="submit" value="Logout"/>
             </form>
-            <a th:href="@{/admin}" th:if="${role=='ADMIN'}">Admin panel</a>
+            <a th:href="@{/admin}" sec:authorize="hasRole('ROLE_ADMIN')">Admin panel</a>
         </div>
 
-        <div th:if="${user==null}">
-            <p th:text="'Not logged in'"></p>
+        <div sec:authorize="!isAuthenticated()">
+            <p>Not logged in</p>
             <a th:href="@{/login}">Login</a>
             <a th:href="@{/register}">Register</a>
         </div>
