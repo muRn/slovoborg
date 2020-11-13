@@ -2,8 +2,9 @@ package org.slovob.slovoborg;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slovob.slovoborg.definition.Definition;
+import org.slovob.slovoborg.definition.DefinitionDto;
 import org.slovob.slovoborg.definition.DefinitionRepository;
-import org.slovob.slovoborg.opinion.Opinion;
+import org.slovob.slovoborg.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +21,11 @@ public class DefaultService {
         this.definitionRepo = definitionRepo;
     }
 
-    public List<Definition> getDefinitions(String clientIp) {
-        log.info("Looking for definitions with " + clientIp + " opinions");
+    public List<DefinitionDto> getDefinitions(User user) {
+        log.info("Looking for approved definitions" + (user != null ? " with " + user.getName() + " opinions" : ""));
         List<Definition> definitions = definitionRepo.findByApproved(true);
-        for (Definition d : definitions) {
-            List<Opinion> userOpinions = d.getOpinions()
-                    .stream()
-                    .filter(x -> x.getIpAddress().equals(clientIp))
-                    .collect(Collectors.toList());
-            d.setOpinions(userOpinions);
-        }
-
-        return definitions;
+        return definitions.stream()
+                .map(x -> DefinitionDto.fromDefinition(x, user))
+                .collect(Collectors.toList());
     }
 }

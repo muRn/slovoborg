@@ -2,6 +2,7 @@ package org.slovob.slovoborg.definition;
 
 import lombok.Data;
 import org.slovob.slovoborg.opinion.Opinion;
+import org.slovob.slovoborg.user.User;
 import org.slovob.slovoborg.word.Word;
 
 import javax.persistence.*;
@@ -23,7 +24,9 @@ public class Definition {
 
     @Column(length = 2048)
     private String example;
-    private String submittedBy;
+
+    @ManyToOne
+    private User author;
     private LocalDate submittedOn;
     private int likes;
     private int dislikes;

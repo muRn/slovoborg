@@ -3,6 +3,7 @@ package org.slovob.slovoborg.opinion;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.slovob.slovoborg.definition.Definition;
+import org.slovob.slovoborg.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,7 +18,9 @@ public class Opinion {
 
     @ManyToOne
     private Definition definition;
-    private String ipAddress;
+
+    @ManyToOne
+    private User user;
     private int opinion;
     private LocalDateTime updatedAt;
 
@@ -26,9 +29,11 @@ public class Opinion {
         updatedAt = LocalDateTime.now();
     }
 
-    public Opinion(int opinion, long definitionId, String ipAddress) {
+    public Opinion(int opinion, long definitionId, User user) {
         this.opinion = opinion;
-        this.ipAddress = ipAddress;
+
+        this.user = user;
+
         Definition d = new Definition();
         d.setId(definitionId);
         definition = d;

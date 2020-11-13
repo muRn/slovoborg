@@ -1,14 +1,14 @@
 package org.slovob.slovoborg;
 
-import org.slovob.slovoborg.definition.Definition;
+import org.slovob.slovoborg.definition.DefinitionDto;
+import org.slovob.slovoborg.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -22,12 +22,12 @@ public class DefaultController {
     }
 
     @GetMapping
-    public String showMainPage(Model model, HttpServletRequest request, Principal principal) {
-        if (principal != null) {
-            model.addAttribute("user", principal.getName());
+    public String showMainPage(Model model, @AuthenticationPrincipal User user) {
+        if (user != null) {
+            model.addAttribute("user", user.getName());
         }
 
-        List<Definition> definitions = service.getDefinitions(request.getRemoteAddr());
+        List<DefinitionDto> definitions = service.getDefinitions(user);
         model.addAttribute(definitions);
         return "index";
     }

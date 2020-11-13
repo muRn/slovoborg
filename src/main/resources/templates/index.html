@@ -11,7 +11,7 @@
 <body>
     <div th:replace="fragments/auth_header :: auth-header">Auth info should be here</div>
 
-    <div th:each="def : ${definitionList}">
+    <div th:each="def : ${definitionDtoList}">
         <div class="word">
             <a th:href="@{/word(id=${def.word.id})}" th:text="${def.word.word}">word here</a>
         </div>

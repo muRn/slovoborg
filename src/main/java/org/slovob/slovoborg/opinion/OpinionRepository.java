@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface OpinionRepository extends JpaRepository<Opinion, Long> {
-    @Query("select o from Opinion o join o.definition d where d.id=?1 and o.ipAddress=?2")
-    Optional<Opinion> findByDefinitionIdAndIpAddress(long definitionId, String ipAddress);
+    @Query("select o from Opinion o join o.definition d join o.user u where d.id=?1 and u.id=?2")
+    Optional<Opinion> findByDefinitionIdAndUserId(long definitionId, long userId);
 }

@@ -3,6 +3,7 @@ package org.slovob.slovoborg.opinion;
 import org.slovob.slovoborg.definition.Definition;
 import org.slovob.slovoborg.definition.DefinitionRepository;
 import org.slovob.slovoborg.exception.FishyFrontendQuery;
+import org.slovob.slovoborg.user.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,7 +18,7 @@ public class OpinionService {
         this.definitionRepo = definitionRepo;
     }
 
-    public void processOpinion(OpinionTransfer opinionDto, String ipAddress) {
+    public void processOpinion(OpinionTransfer opinionDto, User user) {
         long definitionId = opinionDto.getDefinitionId();
         Optional<Definition> definitionOpt = definitionRepo.findById(definitionId);
         if (!definitionOpt.isPresent()) {
@@ -25,10 +26,10 @@ public class OpinionService {
         }
 
         Definition definition = definitionOpt.get();
-        Optional<Opinion> existingOpinionOpt = opinionRepo.findByDefinitionIdAndIpAddress(definitionId, ipAddress);
+        Optional<Opinion> existingOpinionOpt = opinionRepo.findByDefinitionIdAndUserId(definitionId, user.getId());
         Opinion opinion;
         if (!existingOpinionOpt.isPresent()) {
-            opinion = new Opinion(opinionDto.getOpinion(), opinionDto.getDefinitionId(), ipAddress);
+            opinion = new Opinion(opinionDto.getOpinion(), opinionDto.getDefinitionId(), user);
             if (opinionDto.getOpinion() == 1) {
                 definition.like();
             } else if (opinionDto.getOpinion() == -1) {

@@ -1,6 +1,8 @@
 package org.slovob.slovoborg.user;
 
 import lombok.Data;
+import org.slovob.slovoborg.definition.Definition;
+import org.slovob.slovoborg.opinion.Opinion;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,8 +10,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Data
 @Entity
@@ -21,6 +25,12 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String role;
+
+    @OneToMany(mappedBy = "author")
+    private List<Definition> definitions;
+
+    @OneToMany(mappedBy = "user")
+    private List<Opinion> opinions;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
