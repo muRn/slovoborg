@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface DefinitionRepository extends JpaRepository<Definition, Long> {
-    public List<Definition> findByApproved(boolean approved);
+    List<Definition> findByApproved(boolean approved);
 }

@@ -10,8 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface WordRepository extends JpaRepository<Word, Long> {
-    public Optional<Word> findByWord(String word);
+    Optional<Word> findByWord(String word);
 
     @Query("select d from Word w join w.definitions d where d.approved=true and w.id=?1")
-    public List<Definition> findApprovedDefinitionsByWordId(long id);
+    List<Definition> findApprovedDefinitionsByWordId(long id);
 }
