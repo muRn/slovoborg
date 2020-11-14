@@ -9,34 +9,36 @@
 <body>
     <div class="section">
         <div class="container is-max-desktop">
-            <form method="post" th:action="@{/register}">
+            <form method="post" th:action="@{/register}" th:object="${registrationForm}">
                 <div class="field">
                     <label class="label">Username</label>
                     <div class="control has-icons-left">
-                        <input class="input" type="text" name="username" placeholder="Username" autofocus>
+                        <input class="input" type="text" th:field="*{username}" placeholder="Username" autofocus>
                         <span class="icon is-left">
-                                <i class="fas fa-user"></i>
-                            </span>
+                            <i class="fas fa-user"></i>
+                        </span>
                     </div>
+                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="help is-danger">username validation error</p>
                 </div>
 
                 <div class="field">
                     <label class="label">Email</label>
                     <div class="control has-icons-left">
-                        <input class="input" type="text" name="email" placeholder="Email">
+                        <input class="input" type="text" th:field="*{email}" placeholder="Email">
                         <span class="icon is-left">
-                                <i class="fas fa-envelope"></i>
-                            </span>
+                            <i class="fas fa-envelope"></i>
+                        </span>
                     </div>
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="help is-danger">email validation error</p>
                 </div>
 
                 <div class="field">
                     <label class="label">Password</label>
                     <div class="control has-icons-left">
-                        <input class="input" type="password" name="password" placeholder="Password">
+                        <input class="input" type="password" th:field="*{password}" placeholder="Password">
                         <span class="icon is-left">
-                                <i class="fas fa-lock"></i>
-                            </span>
+                            <i class="fas fa-lock"></i>
+                        </span>
                     </div>
                 </div>
 
