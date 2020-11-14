@@ -1,2 +1,2 @@
 # slovoborg
-Russian urbandicionary analogue implemented using Spring framework
+Modern slang dicionary implemented using Spring framework
