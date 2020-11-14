@@ -24,19 +24,21 @@ function changeCount(opinion) {
     const button = document.querySelector('#' + buttonId);
     const count = document.querySelector('#' + countId);
 
-    if (button.classList.contains('primary')) {
-        button.classList.remove('primary');
+    const buttonPressedClass = 'is-info'
+
+    if (button.classList.contains(buttonPressedClass)) {
+        button.classList.remove(buttonPressedClass);
         count.textContent = count.textContent - 1;
     } else {
-        button.classList.add('primary');
+        button.classList.add(buttonPressedClass);
         count.textContent = count.textContent - -1;
 
         // checking if opposite button should be released
         const oppositeAction = opinion.opinion === 1 ? 'dislike' : 'like';
         const otherButton = document.querySelector('#' + oppositeAction + '_btn_' + opinion.definitionId);
         const otherCount = document.querySelector('#' + oppositeAction + 's_cnt_' + opinion.definitionId);
-        if (otherButton.classList.contains('primary')) {
-            otherButton.classList.remove('primary');
+        if (otherButton.classList.contains(buttonPressedClass)) {
+            otherButton.classList.remove(buttonPressedClass);
             otherCount.textContent = otherCount.textContent - 1
         }
     }

@@ -2,19 +2,29 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <title>Словоборг</title>
 </head>
 <body>
-    <div th:replace="fragments/auth_header :: auth-header">Auth info should be here</div>
+    <div class="section">
+        <div th:replace="fragments/auth_header :: auth-header">Auth info should be here</div>
+    </div>
 
-    <form method="post" th:action="@{/admin}" th:each="def : ${definitionList}">
-        <h1 th:text="${def.word.word}"></h1>
-        <div th:text="${def.definition}"></div>
-        <div th:text="${def.example}"></div>
-        <div th:text="'Submitted by '+${def.author.name}+' on '+${def.submittedOn}"></div>
-        <input type="hidden" name="id" th:value="${def.id}">
-        <input type="submit" value="Approve">
-        <hr>
-    </form>
+    <div class="section">
+        <div class="container is-max-desktop">
+            <article class="media" th:each="def : ${definitionList}">
+                <div class="media-content">
+                    <form method="post" th:action="@{/admin}">
+                        <p th:text="${def.word.word}" class="title">word</p>
+                        <p th:text="${def.definition}" class="block">definition</p>
+                        <p th:text="${def.example}" class="block">example</p>
+                        <p th:text="'Submitted by '+${def.author.name}+' on '+${def.submittedOn}" class="block"></p>
+                        <input type="hidden" name="id" th:value="${def.id}">
+                        <button type="submit" class="button is-success">Approve</button>
+                    </form>
+                </div>
+            </article>
+        </div>
+    </div>
 </body>
 </html>
