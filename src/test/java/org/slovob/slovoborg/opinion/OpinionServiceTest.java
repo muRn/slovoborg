@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.slovob.slovoborg.definition.Definition;
 import org.slovob.slovoborg.definition.DefinitionRepository;
 import org.slovob.slovoborg.exception.FishyFrontendQuery;
+import org.slovob.slovoborg.user.User;
 
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ public class OpinionServiceTest {
 
     private OpinionService subject;
     private OpinionTransfer opinionTransfer;
+    private User user;
 
     @Mock
     private OpinionRepository opinionRepo;
@@ -32,6 +34,7 @@ public class OpinionServiceTest {
         initMocks(this);
         subject = new OpinionService(opinionRepo, definitionRepo);
         opinionTransfer = new OpinionTransfer(DEFINITION_ID, 1); // all tests will try to like first definition
+        user.setId(1);
     }
 
     @Test
@@ -39,31 +42,30 @@ public class OpinionServiceTest {
         given(definitionRepo.findById(DEFINITION_ID)).willReturn(Optional.empty());
 
         Assertions.assertThrows(FishyFrontendQuery.class, () -> {
-            subject.processOpinion(opinionTransfer, CLIENT_IP);
+            subject.processOpinion(opinionTransfer, user);
         });
     }
 
     @Test
     public void shouldLike_ifNoOpinionYet() {
         given(definitionRepo.findById(DEFINITION_ID)).willReturn(Optional.of(new Definition()));
-        Optional<Opinion> existingOpinion = Optional.empty();
-        given(opinionRepo.findByDefinitionIdAndUserId(DEFINITION_ID, CLIENT_IP)).willReturn(existingOpinion);
+        given(opinionRepo.findByDefinitionIdAndUserId(DEFINITION_ID, user.getId())).willReturn(Optional.empty());
 
-        subject.processOpinion(opinionTransfer, CLIENT_IP);
+        subject.processOpinion(opinionTransfer, user);
 
         Definition definition = new Definition();
         definition.like();
         verify(definitionRepo).save(definition);
-        verify(opinionRepo).save(new Opinion(opinionTransfer.getOpinion(), opinionTransfer.getDefinitionId(), CLIENT_IP));
+        verify(opinionRepo).save(new Opinion(opinionTransfer.getOpinion(), opinionTransfer.getDefinitionId(), user));
     }
 
     @Test
     public void shouldUnlike_ifAlreadyLiked() {
         given(definitionRepo.findById(DEFINITION_ID)).willReturn(Optional.of(new Definition()));
-        Optional<Opinion> existingOpinion = Optional.of(new Opinion(1, DEFINITION_ID, CLIENT_IP));
-        given(opinionRepo.findByDefinitionIdAndUserId(DEFINITION_ID, CLIENT_IP)).willReturn(existingOpinion);
+        Optional<Opinion> existingOpinion = Optional.of(new Opinion(1, DEFINITION_ID, user));
+        given(opinionRepo.findByDefinitionIdAndUserId(DEFINITION_ID, user.getId())).willReturn(existingOpinion);
 
-        subject.processOpinion(opinionTransfer, CLIENT_IP);
+        subject.processOpinion(opinionTransfer, user);
 
         Definition definition = new Definition();
         definition.unlike();
@@ -71,17 +73,18 @@ public class OpinionServiceTest {
         verify(opinionRepo).deleteById(0L);
     }
 
-    @Test void shouldLikeAndUndislike_ifAlreadyDisliked() {
+    @Test
+    public void shouldLikeAndUndislike_ifAlreadyDisliked() {
         given(definitionRepo.findById(DEFINITION_ID)).willReturn(Optional.of(new Definition()));
-        Optional<Opinion> existingOpinion = Optional.of(new Opinion(-1, DEFINITION_ID, CLIENT_IP));
-        given(opinionRepo.findByDefinitionIdAndUserId(DEFINITION_ID, CLIENT_IP)).willReturn(existingOpinion);
+        Optional<Opinion> existingOpinion = Optional.of(new Opinion(-1, DEFINITION_ID, user));
+        given(opinionRepo.findByDefinitionIdAndUserId(DEFINITION_ID, user.getId())).willReturn(existingOpinion);
 
-        subject.processOpinion(opinionTransfer, CLIENT_IP);
+        subject.processOpinion(opinionTransfer, user);
 
         Definition definition = new Definition();
         definition.like();
         definition.undislike();
         verify(definitionRepo).save(definition);
-        verify(opinionRepo).save(new Opinion(opinionTransfer.getOpinion(), opinionTransfer.getDefinitionId(), CLIENT_IP));
+        verify(opinionRepo).save(new Opinion(opinionTransfer.getOpinion(), opinionTransfer.getDefinitionId(), user));
     }
 }
