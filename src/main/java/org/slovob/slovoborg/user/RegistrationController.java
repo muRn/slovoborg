@@ -1,6 +1,5 @@
 package org.slovob.slovoborg.user;
 
-import org.slovob.slovoborg.exception.EmailExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -32,13 +31,13 @@ public class RegistrationController {
 
     @PostMapping
     public String register(@Valid RegistrationForm rf, Errors errors) {
-        if (errors.hasErrors()) {
-            return "registration";
-        }
-
         String email = rf.getEmail();
         if (repo.findByEmail(email).isPresent()) {
-            throw new EmailExistsException("Email '" + email + "' is already in use");
+            errors.rejectValue("email", "already in use", "Email is already in use");
+        }
+
+        if (errors.hasErrors()) {
+            return "registration";
         }
 
         User user = rf.toUser(passwordEncoder);
