@@ -1,5 +1,7 @@
 package org.slovob.slovoborg.user;
 
+import org.slovob.slovoborg.mail.Email;
+import org.slovob.slovoborg.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -10,17 +12,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/register")
 public class RegistrationController {
     private UserRepository repo;
     private PasswordEncoder passwordEncoder;
-
     @Autowired
-    public RegistrationController(UserRepository repo, PasswordEncoder passwordEncoder) {
+    private MailService mailgun;
+
+    public RegistrationController(UserRepository repo, PasswordEncoder passwordEncoder, MailService mailgun) {
         this.repo = repo;
         this.passwordEncoder = passwordEncoder;
+        this.mailgun = mailgun;
     }
 
     @GetMapping
@@ -30,11 +35,11 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String register(@Valid RegistrationForm rf, Errors errors) {
+    public String register(@Valid RegistrationForm rf, Errors errors, Model model) {
         String email = rf.getEmail();
-        if (repo.findByEmail(email).isPresent()) {
-            errors.rejectValue("email", "already in use", "Email is already in use");
-        }
+        Optional<User> userOpt = repo.findByEmailAndEmailConfirmed(email, true);
+        userOpt.ifPresent(user -> errors.rejectValue("email", "already in use",
+                "Email is already in use"));
 
         if (errors.hasErrors()) {
             return "registration";
@@ -42,6 +47,11 @@ public class RegistrationController {
 
         User user = rf.toUser(passwordEncoder);
         repo.save(user);
-        return "redirect:/login";
+
+        Email confirmationEmail = new Email(email, "Slovoborg confirmation", "Please confirm");
+        mailgun.sendEmail(confirmationEmail);
+
+        model.addAttribute("email", email);
+        return "postreg";
     }
 }

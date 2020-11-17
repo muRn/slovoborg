@@ -2,21 +2,21 @@ package org.slovob.slovoborg.mail.mailgun;
 
 import org.slovob.slovoborg.mail.Email;
 import org.slovob.slovoborg.mail.MailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+@Component("mailgun")
 public class MailgunService implements MailService {
     private static final String DOMAIN_NAME = "sandbox2486a9dd4f464c63a7d52bedd3a26b1a.mailgun.org";
     private static final String API_KEY = "b800dae6462a9d6dfe52027230ac7c40-ba042922-321bfb38";
 
     private RestTemplate restTemplate;
 
-    @Autowired
-    public MailgunService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public MailgunService() {
+        this.restTemplate = new RestTemplate();
     }
 
     private HttpHeaders createHeaders(String username, String password){

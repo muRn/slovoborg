@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <script type="text/javascript" th:src="@{/js/redirect.js}"></script>
+    <title>Словоборг</title>
+</head>
+<body>
+
+<div class="section">
+    <div class="container is-max-desktop">
+        <article class="media">
+            <p class="media-content">
+                We have sent a confirmation link to <span th:text="${email}"></span>.
+                Please open your inbox and confirm your email by clicking the link.
+            </p>
+        </article>
+    </div>
+</div>
+</body>
+</html>
