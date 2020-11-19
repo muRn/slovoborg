@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> userOpt = userRepository.findByName(username);
+        Optional<User> userOpt = userRepository.findByNameAndActive(username, true);
         if (userOpt.isPresent()) {
             return userOpt.get();
         }
@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
 
     public User registerNewUserAccount(RegistrationForm rf, Errors errors) {
         String username = rf.getUsername();
-        Optional<User> userOpt = userRepository.findByName(username);
+        Optional<User> userOpt = userRepository.findByNameAndActive(username, true);
         userOpt.ifPresent(user -> errors.rejectValue("name", "already in use", "User name is already in use"));
 
         String email = rf.getEmail();
