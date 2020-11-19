@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
 
 import java.util.Optional;
 
@@ -30,7 +31,19 @@ public class UserService implements UserDetailsService {
         throw new UsernameNotFoundException("User '" + username + "' not found");
     }
 
-    public User registerNewUserAccount(RegistrationForm rf) {
+    public User registerNewUserAccount(RegistrationForm rf, Errors errors) {
+        String username = rf.getUsername();
+        Optional<User> userOpt = userRepository.findByName(username);
+        userOpt.ifPresent(user -> errors.rejectValue("name", "already in use", "User name is already in use"));
+
+        String email = rf.getEmail();
+        userOpt = userRepository.findByEmailAndActive(email, true);
+        userOpt.ifPresent(user -> errors.rejectValue("email", "already in use", "Email is already in use"));
+
+        if (errors.hasErrors()) {
+            return null;
+        }
+
         User user = rf.toUser(passwordEncoder);
         return userRepository.save(user);
     }

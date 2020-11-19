@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -38,26 +36,19 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String register(@Valid RegistrationForm rf, Errors errors, Model model, HttpServletRequest request) {
-        String username = rf.getUsername();
-        Optional<User> userOpt = repo.findByName(username);
-        userOpt.ifPresent(user -> errors.rejectValue("name", "already in use", "User name is already in use"));
-
-        String email = rf.getEmail();
-        userOpt = repo.findByEmailAndActive(email, true);
-        userOpt.ifPresent(user -> errors.rejectValue("email", "already in use", "Email is already in use"));
-
+    public String register(@Valid RegistrationForm rf, Errors errors, Model model) {
+        User user = userService.registerNewUserAccount(rf, errors);
         if (errors.hasErrors()) {
+            log.info("There were errors found in registration form, returning them to user");
             return "registration";
         }
 
-        User user = userService.registerNewUserAccount(rf);
-
+        log.info("Form looks good, sending confirmation email");
         String appUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
         log.info("app url: " + appUrl);
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, appUrl));
 
-        model.addAttribute("email", email);
+        model.addAttribute("email", rf.getEmail());
         return "postreg";
     }
 
