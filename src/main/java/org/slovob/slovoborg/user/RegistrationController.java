@@ -37,7 +37,7 @@ public class RegistrationController {
     @PostMapping
     public String register(@Valid RegistrationForm rf, Errors errors, Model model) {
         String email = rf.getEmail();
-        Optional<User> userOpt = repo.findByEmailAndEmailConfirmed(email, true);
+        Optional<User> userOpt = repo.findByEmailAndActive(email, true);
         userOpt.ifPresent(user -> errors.rejectValue("email", "already in use",
                 "Email is already in use"));
 
