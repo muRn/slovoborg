@@ -11,9 +11,9 @@
         <div class="container is-max-desktop">
             <form method="post" th:action="@{/login}">
                 <div class="field">
-                    <label class="label">Username</label>
+                    <label class="label" th:text="#{loginForm.userName}">Username</label>
                     <div class="control has-icons-left">
-                        <input class="input" type="text" name="username" placeholder="Username" autofocus>
+                        <input class="input" type="text" name="username" th:placeholder="#{loginForm.userName}" autofocus>
                         <span class="icon is-left">
                             <i class="fas fa-user"></i>
                         </span>
@@ -21,9 +21,9 @@
                 </div>
 
                 <div class="field">
-                    <label class="label">Password</label>
+                    <label class="label" th:text="#{loginForm.password}">Password</label>
                     <div class="control has-icons-left">
-                        <input class="input" type="password" name="password" placeholder="Password">
+                        <input class="input" type="password" name="password" th:placeholder="#{loginForm.password}">
                         <span class="icon is-left">
                             <i class="fas fa-lock"></i>
                         </span>
@@ -32,14 +32,14 @@
 
                 <div class="field">
                     <div class="control">
-                        <button class="button is-primary" type="submit">Log in</button>
+                        <button class="button is-primary" type="submit" th:text="#{loginForm.login}">Log in</button>
                     </div>
                 </div>
 
                 <div class="field">
-                    <label class="label">Don't have an account?</label>
+                    <label class="label" th:text="#{loginForm.dontHave}">Don't have an account?</label>
                     <div class="control">
-                        <a class="button is-primary is-light" th:href="@{/register}">Register</a>
+                        <a class="button is-primary is-light" th:href="@{/register}" th:text="#{loginForm.register}">Register</a>
                     </div>
                 </div>
             </form>

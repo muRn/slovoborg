@@ -9,21 +9,21 @@
         <div class="level">
             <div class="level-left">
                 <div sec:authorize="isAuthenticated()">
-                    <p th:text="'Logged in as '+${#authentication.name}"></p>
+                    <p th:text="#{authHeader.loggedInAs}+' '+${#authentication.name}"></p>
                     <form method="POST" th:action="@{/logout}">
-                        <input type="submit" class="button is-danger is-outlined is-small" value="Logout"/>
+                        <input type="submit" class="button is-danger is-outlined is-small" th:value="#{authHeader.logout}"/>
                     </form>
                 </div>
 
                 <div sec:authorize="!isAuthenticated()">
-                    <p>Not logged in</p>
-                    <a class="button is-primary is-small" th:href="@{/login}">Log in</a>
-                    <a class="button is-primary is-light is-small" th:href="@{/register}">Register</a>
+                    <p th:text="#{authHeader.notLoggedIn}">Not logged in</p>
+                    <a class="button is-primary is-small" th:href="@{/login}" th:text="#{authHeader.login}">Log in</a>
+                    <a class="button is-primary is-light is-small" th:href="@{/register}" th:text="#{authHeader.register}">Register</a>
                 </div>
             </div>
 
             <div class="level-right">
-                <a class="button is-link" th:href="@{/admin}" sec:authorize="hasRole('ROLE_ADMIN')">Admin panel</a>
+                <a class="button is-link" th:href="@{/admin}" sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{authHeader.adminPanel}">Admin panel</a>
             </div>
         </div>
     </div>
