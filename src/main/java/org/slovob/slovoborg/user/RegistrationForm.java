@@ -24,6 +24,7 @@ public class RegistrationForm {
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setRole("USER");
+        user.setActive(false); // explicit > implicit
         return user;
     }
 }
