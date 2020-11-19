@@ -20,12 +20,12 @@ public class RegistrationController {
     private UserRepository repo;
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private MailService mailgun;
+    private MailService sendgrid;
 
-    public RegistrationController(UserRepository repo, PasswordEncoder passwordEncoder, MailService mailgun) {
+    public RegistrationController(UserRepository repo, PasswordEncoder passwordEncoder, MailService sendgrid) {
         this.repo = repo;
         this.passwordEncoder = passwordEncoder;
-        this.mailgun = mailgun;
+        this.sendgrid = sendgrid;
     }
 
     @GetMapping
@@ -49,7 +49,7 @@ public class RegistrationController {
         repo.save(user);
 
         Email confirmationEmail = new Email(email, "Slovoborg confirmation", "Please confirm");
-        mailgun.sendEmail(confirmationEmail);
+        sendgrid.sendEmail(confirmationEmail);
 
         model.addAttribute("email", email);
         return "postreg";
