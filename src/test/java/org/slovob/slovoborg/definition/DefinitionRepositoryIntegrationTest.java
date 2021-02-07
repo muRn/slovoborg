@@ -27,6 +27,6 @@ public class DefinitionRepositoryIntegrationTest {
 
         // then
         assertThat(found.size()).isEqualTo(3);
-        assertThat(found.get(0).getAuthor()).isEqualTo("flexitarian");
+        assertThat(found.get(0).getAuthor().getName()).isEqualTo("flexitarian");
     }
 }

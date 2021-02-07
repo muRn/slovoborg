@@ -34,6 +34,7 @@ public class OpinionServiceTest {
         initMocks(this);
         subject = new OpinionService(opinionRepo, definitionRepo);
         opinionTransfer = new OpinionTransfer(DEFINITION_ID, 1); // all tests will try to like first definition
+        user = new User();
         user.setId(1);
     }
 
