@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Slf4j
@@ -36,7 +37,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String register(@Valid RegistrationForm rf, Errors errors, Model model) {
+    public String register(@Valid RegistrationForm rf, Errors errors, Model model, HttpServletRequest request) {
         User user = userService.registerNewUserAccount(rf, errors);
         if (errors.hasErrors()) {
             log.info("There were errors found in registration form, returning them to user");
@@ -46,7 +47,7 @@ public class RegistrationController {
         log.info("Form looks good, sending confirmation email");
         String appUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
         log.info("app url: " + appUrl);
-        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, appUrl));
+        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(appUrl, request.getLocale(), user));
 
         model.addAttribute("email", rf.getEmail());
         return "postreg";

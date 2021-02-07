@@ -21,7 +21,7 @@
                     </p>
                     <p th:text="${def.definition}" class="block">definition</p>
                     <p class="block"><em th:text="${def.example}">example</em></p>
-                    <p th:text="#{index.submittedBy}+' '+${def.submittedBy}+' '+#{index.submittedOn}+' '+${def.submittedOn}" class="block">submitted by author_name on some_date</p>
+                    <p th:text="#{index.submittedByOn(${def.submittedBy}, ${def.submittedOn})}" class="block">submitted by author_name on some_date</p>
                     <div class="buttons">
                         <button class="button is-small is-rounded" th:classappend="${def.liked} ? 'is-info' : ''" th:id="'like_btn_'+${def.id}" th:onclick="'postOpinion({definitionId:'+${def.id}+',opinion:1})'">
                             <span class="icon">

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,6 +32,8 @@ public class WordController {
         if (!wordOpt.isPresent()) {
             throw new RuntimeException("Word " + id + " does not exist");
         }
+
+        List<String> vals = new ArrayList<>();
 
         model.addAttribute("wordValue", wordOpt.get().getWord());
         List<Definition> definitions = repo.findApprovedDefinitionsByWordId(id);
