@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('test') {
             steps {
-                withGradle 'test'
+                withGradle
             }
         }
         stage('build') {
             steps {
-                withGradle 'build'
+                withGradle
             }
         }
     }
