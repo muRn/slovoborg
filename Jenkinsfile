@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('test') {
             steps {
-                sh './gradlew test'
+                withGradle 'test'
             }
         }
         stage('build') {
             steps {
-                sh './gradlew build'
+                withGradle 'build'
             }
         }
     }
