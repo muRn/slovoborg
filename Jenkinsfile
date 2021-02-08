@@ -1,10 +1,14 @@
 pipeline {
     agent any
+
+    tools {
+        gradle "default"
+    }
+
     stages {
         stage('test') {
             steps {
-                sh 'pwd'
-                sh 'echo $PATH'
+                sh 'gradle test'
             }
         }
         stage('build') {
