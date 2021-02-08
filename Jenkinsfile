@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('test') {
             steps {
-                sh 'gradle test'
+                sh 'pwd'
+                sh 'echo $PATH'
             }
         }
         stage('build') {
