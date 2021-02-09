@@ -4,12 +4,11 @@ import org.slovob.slovoborg.mail.Email;
 import org.slovob.slovoborg.mail.MailService;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.*;
-import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-@Component("mailgun")
+//@Component("mailgun")
 @ConfigurationProperties(prefix = "mail.service.mailgun")
 public class MailgunService implements MailService {
     private String domainName;
